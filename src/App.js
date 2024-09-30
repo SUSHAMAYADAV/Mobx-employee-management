@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { observer } from "mobx-react-lite";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import AddDetails from "./Components/AddDetails";
+import TableList from "./Components/TableList";
 
-function App() {
+const App = observer(() => {
+  const [open, setOpen] = useState(false);
+  const [editData, setEditData] = useState(null);
+
+  const handleOpenButton = () => {
+    setOpen(true);
+    setEditData(null);
+  };
+
+  const handleCloseButton = () => {
+    setOpen(false);
+    setEditData(null);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Box sx={{ padding: 3 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h6" align="center" gutterBottom>
+          Employee Management
+        </Typography>
+        <Button
+          variant="contained"
+          sx={{ mb: 2 }}
+          color="primary"
+          onClick={handleOpenButton}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          Add Employee
+        </Button>
+      </Box>
+      <AddDetails
+        open={open}
+        handleCloseButton={handleCloseButton}
+        editData={editData}
+      />
+      <TableList setOpen={setOpen} setEditData={setEditData} />
+    </Box>
   );
-}
+});
 
 export default App;
